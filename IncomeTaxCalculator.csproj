@@ -133,6 +133,11 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Taxes\CityTax.cs" />
+    <Compile Include="Taxes\CountyTax.cs" />
+    <Compile Include="Taxes\DistrictTax.cs" />
+    <Compile Include="Taxes\FederalTax.cs" />
+    <Compile Include="Taxes\StateTax.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -174,6 +179,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Taxes\Calculations\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
