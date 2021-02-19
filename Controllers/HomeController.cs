@@ -36,7 +36,7 @@ namespace IncomeTaxCalculator.Controllers
 
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new System.Uri(Credentials.TaxBaseURL);
+                client.BaseAddress = new Uri(Credentials.TaxBaseURL);
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
