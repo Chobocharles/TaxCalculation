@@ -1,5 +1,6 @@
 ﻿using IncomeTaxCalculator.Taxes;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -39,12 +40,20 @@ namespace IncomeTaxCalculator.Controllers
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage response = await client.GetAsync(Credentials.FederalTaxesURL);
-                if (response.IsSuccessStatusCode)
+                try
                 {
-                    var taxResponse = response.Content.ReadAsStringAsync().Result;
+                    HttpResponseMessage response = await client.GetAsync(Credentials.FederalTaxesURL);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var taxResponse = response.Content.ReadAsStringAsync().Result;
 
-                    FederalTaxes = JsonConvert.DeserializeObject<List<FederalTax>>(taxResponse);
+                        FederalTaxes = JsonConvert.DeserializeObject<List<FederalTax>>(taxResponse);
+                    }
+                }
+
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
                 }
 
                 return View(FederalTaxes);
