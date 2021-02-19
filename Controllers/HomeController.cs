@@ -1,4 +1,10 @@
-﻿using System.Web.Mvc;
+﻿using IncomeTaxCalculator.Taxes;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace IncomeTaxCalculator.Controllers
 {
@@ -21,6 +27,28 @@ namespace IncomeTaxCalculator.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        public async Task<ActionResult> GetFederalTaxes()
+        {
+            List<FederalTax> FederalTaxes = new List<FederalTax>();
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new System.Uri(Credentials.TaxBaseURL);
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = await client.GetAsync(Credentials.FederalTaxesURL);
+                if (response.IsSuccessStatusCode)
+                {
+                    var taxResponse = response.Content.ReadAsStringAsync().Result;
+
+                    FederalTaxes = JsonConvert.DeserializeObject<List<FederalTax>>(taxResponse);
+                }
+
+                return View(FederalTaxes);
+            }
         }
     }
 }
