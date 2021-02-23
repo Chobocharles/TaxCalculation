@@ -30,13 +30,14 @@ namespace IncomeTaxCalculator.Controllers
             return View();
         }
 
+        [HttpGet]
         public async Task<ActionResult> GetFederalTaxes()
         {
             List<FederalTax> FederalTaxes = new List<FederalTax>();
 
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri(Credentials.TaxBaseURL);
+                client.BaseAddress = new Uri(Credentials.TestURL);
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
