@@ -1,4 +1,5 @@
-﻿using IncomeTaxCalculator.Taxes;
+﻿using IncomeTaxCalculator.Models;
+using IncomeTaxCalculator.Taxes;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -33,22 +34,25 @@ namespace IncomeTaxCalculator.Controllers
         [HttpGet]
         public async Task<ActionResult> GetFederalTaxes()
         {
-            List<FederalTax> FederalTaxes = new List<FederalTax>();
+            HomeModel homeModel = new HomeModel();
+            List<FederalTax> FederalTaxes;
 
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(Credentials.TestURL);
                 client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Credentials.TaxAPIKey);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 try
                 {
-                    HttpResponseMessage response = await client.GetAsync(Credentials.FederalTaxesURL);
+                    HttpResponseMessage response = await client.GetAsync(Credentials.TestURL);
                     if (response.IsSuccessStatusCode)
                     {
                         var taxResponse = response.Content.ReadAsStringAsync().Result;
 
                         FederalTaxes = JsonConvert.DeserializeObject<List<FederalTax>>(taxResponse);
+                        homeModel.FederalTaxes = FederalTaxes;
                     }
                 }
 
@@ -57,7 +61,7 @@ namespace IncomeTaxCalculator.Controllers
                     Console.WriteLine(e.Message);
                 }
 
-                return View(FederalTaxes);
+                return View("Index", homeModel);
             }
         }
     }
