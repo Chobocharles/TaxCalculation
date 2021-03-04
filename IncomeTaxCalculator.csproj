@@ -139,6 +139,10 @@
     <Compile Include="Taxes\DistrictTax.cs" />
     <Compile Include="Taxes\FederalTax.cs" />
     <Compile Include="Taxes\StateTax.cs" />
+    <Compile Include="TaxFiler\TaxFiler.cs" />
+    <Compile Include="TaxObjects\Deduction.cs" />
+    <Compile Include="TaxObjects\FilingStatus.cs" />
+    <Compile Include="TaxObjects\TaxBracket.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />
