@@ -44,20 +44,19 @@ namespace IncomeTaxCalculator.Controllers
                 try
                 {
                     HttpResponseMessage response = await client.GetAsync(Credentials.TestURL);
-                    if (response.IsSuccessStatusCode)
-                    {
-                        var taxResponse = response.Content.ReadAsStringAsync().Result;
+                    response.EnsureSuccessStatusCode();
 
-                        FilingStatus filingStatus = (FilingStatus)JsonConvert.DeserializeObject(taxResponse, typeof(FilingStatus));
-                        homeModel.FilingStatus = filingStatus.Head_of_Household.Deductions[0].Deduction_Amount.ToString();
-                    }
+                    var taxResponse = response.Content.ReadAsStringAsync().Result;
+
+                    FilingStatus filingStatus = (FilingStatus)JsonConvert.DeserializeObject(taxResponse, typeof(FilingStatus));
+                    homeModel.FilingStatus = filingStatus.Head_of_Household.Deductions[0].Deduction_Amount.ToString();
                 }
 
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
                 }
-                
+
                 return Json(homeModel.FilingStatus, JsonRequestBehavior.AllowGet);
             }
         }
