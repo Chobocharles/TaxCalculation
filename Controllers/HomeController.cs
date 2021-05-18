@@ -54,7 +54,7 @@ namespace IncomeTaxCalculator.Controllers
 
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.Message);
+                    System.Diagnostics.Debug.WriteLine(e.Message);
                 }
 
                 return Json(homeModel.FilingStatus, JsonRequestBehavior.AllowGet);
