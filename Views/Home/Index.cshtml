@@ -7,18 +7,19 @@
 <div class="row">
     <div class="col-md-4">
         <h2>Getting started</h2>
-        Income Amount: <input type="text" id="incomeAmount" />
+        Year: <input type="text" id="datePicker" />
         <br />
-        Federal Tax: <label id="FederalTaxTextBox" ></label>
+        Federal Tax: <label id="FederalTaxTextBox"></label>
         <br />
-        <label id="federalTaxAmount" value="0"/>
+        <label id="federalTaxAmount" value="0" />
         <input type="button" id="calculateFederalTaxes" class="calculate-federal-taxes-btn" value="Calculate Federal Taxes" />
     </div>
 </div>
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="@Url.Content("~/Scripts/jquery-3.6.0.min.js")"></script>
+<script src="@Url.Content("~/Scripts/jquery-ui-1.12.1.min.js")"></script>
 
-<script type="text/javascript">
+<script>
     $(document).ready(function () {
         $("#calculateFederalTaxes").click(function () {
             $.ajax({
@@ -36,5 +37,10 @@
                 }
             });
         });
+
+        $(function () {
+            $("#datePicker").datepicker();
+        });
     });
+
 </script>
