@@ -9,7 +9,7 @@
         <h2>Getting started</h2>
         Income Amount: <input type="text" id="incomeAmount" />
         <br />
-        Federal Tax: <label>@Model.FilingStatus</label>
+        Federal Tax: <label id="FederalTaxTextBox" ></label>
         <br />
         <label id="federalTaxAmount" value="0"/>
         <input type="button" id="calculateFederalTaxes" class="calculate-federal-taxes-btn" value="Calculate Federal Taxes" />
@@ -26,7 +26,7 @@
                 url: '@Url.Action("GetFederalTaxes", "Home")',
                 contentType: "application/json; charset=utf-8",
                 success: function (response) {
-                    $("#FederalTaxLabel").text('@Model.FilingStatus');
+                    document.getElementById("FederalTaxTextBox").innerHTML = response;
                     console.log("Success");
                     console.log(response);
                 },

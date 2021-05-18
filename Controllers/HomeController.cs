@@ -57,8 +57,8 @@ namespace IncomeTaxCalculator.Controllers
                 {
                     Console.WriteLine(e.Message);
                 }
-
-                return View("Index", homeModel);
+                
+                return Json(homeModel.FilingStatus, JsonRequestBehavior.AllowGet);
             }
         }
     }
