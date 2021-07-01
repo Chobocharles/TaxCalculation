@@ -36,17 +36,17 @@ namespace IncomeTaxCalculator.Controllers
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri(Credentials.TestURL);
+                client.BaseAddress = new Uri(homeModel.BaseAddress);
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Credentials.TaxAPIKey);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 try
                 {
-                    HttpResponseMessage response = await client.GetAsync(Credentials.TestURL);
+                    HttpResponseMessage response = await client.GetAsync(homeModel.BaseAddress);
                     response.EnsureSuccessStatusCode();
 
-                    var taxResponse = response.Content.ReadAsStringAsync().Result;
+                    string taxResponse = response.Content.ReadAsStringAsync().Result;
 
                     FilingStatus filingStatus = (FilingStatus)JsonConvert.DeserializeObject(taxResponse, typeof(FilingStatus));
                     homeModel.FilingStatus = filingStatus.Head_of_Household.Deductions[0].Deduction_Amount.ToString();
